@@ -2,7 +2,7 @@ import { v4 as uuidv4 } from "uuid";
 
 export const user = [
   {
-    id: uuidv4(),
+    id: "karel",
     userName: "Karel",
     firstName: "Karel",
     secondName: "Svancar",
@@ -38,7 +38,7 @@ export const user = [
     ],
   },
   {
-    id: uuidv4(),
+    id: "lily",
     userName: "Lily",
     firstName: "Lily",
     secondName: "Svancarová",
