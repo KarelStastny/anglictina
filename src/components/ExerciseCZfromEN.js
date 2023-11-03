@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { vocabulary } from "../data/vocabulary";
 import { UseEnglish } from "../context/EnglishContext";
+import SummaryProgress from "./SummaryProgress";
 
 const ExerciseENfromCZ = () => {
     const{loggedUser, setLoggedUser, rightAnswerProgress, wrongAnswerProgress} = UseEnglish()
@@ -79,11 +80,12 @@ const ExerciseENfromCZ = () => {
   }, [wordCZ])
 
   return (
-    <div className="w-full p-4">
-      <div className="max-w-[800px] h-[500px]  border m-auto p-4 flex  items-center justify-center flex-col">
+    <div className="w-full p-4 bg-gray-100 flex flex-col justify-center items-center h-screen">
+      <SummaryProgress/>
+      <div className="min-w-[800px] h-[500px] bg-white shadow-lg border border-gray-200 m-auto p-6 flex items-center justify-center flex-col rounded-lg">
         {start ? (
           <button
-            className="text-xl bg-blue-400 px-4 py-2 rounded-xl hover:bg-blue-500 transition-all duration-100"
+            className="text-xl bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50"
             onClick={() => {
               setStart(false);
               generatorRandomNumber();
@@ -93,15 +95,14 @@ const ExerciseENfromCZ = () => {
           </button>
         ) : (
           <>
-            {/* Check */}
-            <div className="mb-10">
+            <div className="mb-10 text-lg font-semibold">
               <div
                 className={
                   correctly
-                    ? "text-green-500"
+                    ? "text-green-600"
                     : secondCorrectly
-                    ? "text-orange-500"
-                    : "text-red-500"
+                    ? "text-yellow-600"
+                    : "text-red-600"
                 }
               >
                 {correctly
@@ -111,38 +112,34 @@ const ExerciseENfromCZ = () => {
                   : wrongAnswer}
               </div>
             </div>
-
-            {/* Words */}
+  
             <form
-              className="flex items-center justify-center flex-col"
+              className="flex flex-col items-center justify-center"
               onSubmit={submitForm}
             >
-              {/* Words */}
-              <section className="flex gap-6 items-center justify-center">
-                {/* Czech Word */}
-                <div>{wordCZ}</div>
-                {/* English Word */}
+              <section className="flex gap-8 items-center justify-center">
+                <div className="text-gray-800 font-medium">{wordCZ}</div>
                 <input
-                  className="border-b-2 border-black bg-transparent outline-none pl-2 "
+                  className="border-b-2 border-gray-400 focus:border-blue-500 bg-transparent outline-none pl-2 text-lg"
                   type="text"
                   value={answer}
-                  placeholder="write English word"
+                  placeholder="Napište anglické slovo"
                   onChange={(e) => setAnswer(e.target.value)}
                 />
               </section>
-              {/* Submit or next  */}
-
+  
               {isFomrSend ? (
                 <button
-                  className="mt-10 bg-blue-400 px-3 py-1 rounded-lg hover:bg-blue-500 transition-all duration-150 cursor-pointer "
+                  className="mt-10 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50"
                   onClick={generatorRandomNumber}
                 >
                   Další slovíčko
                 </button>
               ) : (
                 <input
-                  className="mt-10 bg-blue-400 px-3 py-1 rounded-lg hover:bg-blue-500 transition-all duration-150  "
+                  className="mt-10 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50"
                   type="submit"
+                  value="Odeslat"
                 />
               )}
             </form>
@@ -151,6 +148,7 @@ const ExerciseENfromCZ = () => {
       </div>
     </div>
   );
+  
 };
 
 export default ExerciseENfromCZ;
