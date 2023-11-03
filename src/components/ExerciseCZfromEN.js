@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { vocabulary } from "../data/vocabulary";
 import { UseEnglish } from "../context/EnglishContext";
 
-const Exercise = () => {
+const ExerciseENfromCZ = () => {
     const{loggedUser, setLoggedUser, rightAnswerProgress, wrongAnswerProgress} = UseEnglish()
 
     // console.log(loggedUser);
@@ -153,4 +153,4 @@ const Exercise = () => {
   );
 };
 
-export default Exercise;
+export default ExerciseENfromCZ;

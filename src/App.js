@@ -3,6 +3,8 @@ import { Route, Routes } from 'react-router'
 import Home from "./Pages/Home"
 import User from "./Pages/User"
 import Login from "./Pages/Login"
+import Exercise from "./Pages/Exercise"
+import Registration from "./Pages/Registration"
 import Navbar from './components/Header/Navbar'
 
 const App = () => {
@@ -12,7 +14,9 @@ const App = () => {
       <Routes>
         <Route path='/' element={<Home/>}/>
         <Route path='/login' element={<Login/>}/>
+        <Route path='/registration' element={<Registration/>}/>
         <Route path='/user' element={<User/>}/>
+        <Route path='/exercise' element={<Exercise/>}/>
      
       </Routes>
 

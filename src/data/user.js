@@ -9,9 +9,9 @@ export const user = [
     password: "Kolotoc987",
     allStudyProgress: [
       {
-        timesAllPracticed: 1000,
-        timesCorrect: 600,
-        timesIncorrect: 400,
+        timesAllPracticed: 0,
+        timesCorrect: 0,
+        timesIncorrect: 0,
       },
     ],
     studyVocabulary: [
@@ -27,7 +27,7 @@ export const user = [
         czechOption: ["pes", "psi", "pejsek", "pejsko", "psík"],
         studyProgress: [
           {
-            timesPractice: 10,
+            timesPractice: 0,
             timesCorrect: 0,
             timesIncorrect:0,
             learned: false,

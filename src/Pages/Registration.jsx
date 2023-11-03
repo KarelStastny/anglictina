@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
-import { user } from "../../data/user";
-import { UseEnglish } from "../../context/EnglishContext";
+import {useNavigate} from "react-router-dom"
+import { UseEnglish } from "../context/EnglishContext";
 
 const Registration = () => {
   const { setRegistredUser, registredUser } = UseEnglish();
@@ -13,6 +13,7 @@ const Registration = () => {
   const [passwordSecond, setPasswordSecond] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
+  const navigate = useNavigate()
   // show write password
   const showPassword = () => {
     setPasswordVisibility(!passwordVisibility);
@@ -90,6 +91,8 @@ const Registration = () => {
       setSecondName("");
       setPassword("");
       setPasswordSecond("");
+
+      navigate("/login")
 
       console.log(registredUser);
       // Poteé tam bude přesměrování na příhlašovací stránku
