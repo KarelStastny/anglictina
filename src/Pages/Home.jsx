@@ -1,6 +1,7 @@
 import React from 'react'
 import { vocabulary } from '../data/vocabulary'
 import Exercise from '../components/Exercise';
+import SummaryProgress from '../context/SummaryProgress';
 
 const Home = () => {
   console.log(vocabulary);
@@ -9,6 +10,7 @@ const Home = () => {
     <div>
       Udělat obrácenou komponentu z aj do cz při rozdělení co uživatel zvolí
       <Exercise/>
+      <SummaryProgress/>
     </div>
   )
 }
