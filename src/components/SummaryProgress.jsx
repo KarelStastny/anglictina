@@ -1,5 +1,5 @@
 import React from 'react'
-import { UseEnglish } from './EnglishContext'
+import { UseEnglish } from '../context/EnglishContext'
 
 const SummaryProgress = () => {
     const {loggedUser} = UseEnglish()

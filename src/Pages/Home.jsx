@@ -1,7 +1,7 @@
 import React from 'react'
 import { vocabulary } from '../data/vocabulary'
 import Exercise from '../components/Exercise';
-import SummaryProgress from '../context/SummaryProgress';
+import SummaryProgress from '../components/SummaryProgress';
 
 const Home = () => {
   console.log(vocabulary);
