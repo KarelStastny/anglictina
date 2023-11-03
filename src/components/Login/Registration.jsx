@@ -6,7 +6,6 @@ const Registration = () => {
   const { setRegistredUser, registredUser } = UseEnglish();
 
   const [notification, setNotification] = useState("");
-  const [id, setId] = useState("");
   const [userName, setUserName] = useState("");
   const [firstName, setFirstName] = useState("");
   const [secondName, setSecondName] = useState("");
