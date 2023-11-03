@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/anglictina/static/css/main.7c85e867.css",
+    "main.js": "/anglictina/static/js/main.03f44931.js",
+    "index.html": "/anglictina/index.html",
+    "main.7c85e867.css.map": "/anglictina/static/css/main.7c85e867.css.map",
+    "main.03f44931.js.map": "/anglictina/static/js/main.03f44931.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.7c85e867.css",
+    "static/js/main.03f44931.js"
+  ]
+}
