@@ -73,6 +73,14 @@ const Registration = () => {
         firstName: firstName,
         secondName: secondName,
         id: userName,
+        studyVocabulary:[],
+        allStudyProgress: [
+          {
+            timesAllPracticed: 0,
+            timesCorrect: 0,
+            timesIncorrect: 0,
+          },]
+          
       };
       setRegistredUser([...registredUser, newUser]);
 
