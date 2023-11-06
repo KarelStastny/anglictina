@@ -8,16 +8,14 @@ const User = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalContent, setModalContent] = useState(null);
 
-  console.log(loggedUser);
-  const { firstName, secondName, allStudyProgress, studyVocabulary } =
-    loggedUser;
+// Destructing
+  const {
+    firstName,
+    secondName,
+    allStudyProgress = [],
+    studyVocabulary = [],
+  } = loggedUser;
 
-  // Zkontrolujte, zda allStudyProgress má alespoň jeden prvek před přístupem k jeho vlastnostem
-  const progressAll = allStudyProgress[0] || {
-    timesAllPracticed: 0,
-    timesCorrect: 0,
-    timesIncorrect: 0,
-  };
   const showModal = (wordDetails) => {
     setModalContent(wordDetails);
     setIsModalOpen(true);
@@ -54,7 +52,7 @@ const User = () => {
           <div className="bg-white p-4 shadow rounded-lg">
             <label className="text-gray-500">Počet Všech opakování</label>
             <p className="text-gray-700 font-semibold">
-              {progressAll.timesAllPracticed}
+              {allStudyProgress[0]?.timesAllPracticed ?? "0"}
             </p>
           </div>
           <div className="bg-white p-4 shadow rounded-lg">
@@ -62,7 +60,7 @@ const User = () => {
               Celkový počet správných odpovědí
             </label>
             <p className="text-gray-700 font-semibold">
-              {progressAll.timesCorrect}
+              {allStudyProgress[0]?.timesCorrect ?? "0"}
             </p>
           </div>
           <div className="bg-white p-4 shadow rounded-lg">
@@ -70,7 +68,7 @@ const User = () => {
               Celkový počet chybných odpovědí
             </label>
             <p className="text-gray-700 font-semibold">
-              {progressAll.timesIncorrect}
+              {allStudyProgress[0]?.timesIncorrect ?? "0"}
             </p>
           </div>
         </section>
@@ -138,45 +136,48 @@ const User = () => {
           )}
 
           <tbody>
+
+            {/* Vypsání pouze těch která už byla někdy cvičená */}
             {loggedUser.studyVocabulary.map((one, index) => {
               const knowThisVocabulary =
-                one.studyProgress[0].timesCorrect >
-                one.studyProgress[0].timesIncorrect;
-              return (
-                <tr
-                  className={`border-b border-gray-200 ${
-                    index % 2 === 0 ? "bg-gray-50" : "bg-white"
-                  }`}
-                  key={index}
-                >
-                  {/* ... ostatní buňky tabulky ... */}
-                  <td
-                    onClick={() => showModal(one)}
-                    className="group relative text-left px-8 py-4 text-blue-600 cursor-pointer "
-                  >
-                    {one.czechWord}
-                  </td>
-
-                  <td className="text-left px-8 py-4">{one.englishWord}</td>
-                  <td className="text-left px-8 py-4">
-                    {one.studyProgress[0].timesPractice}
-                  </td>
-                  <td className="text-left px-8 py-4">
-                    {one.studyProgress[0].timesCorrect}
-                  </td>
-                  <td className="text-left px-8 py-4">
-                    {one.studyProgress[0].timesIncorrect}
-                  </td>
-                  <td
-                    className={`px-8 py-4 ${
-                      knowThisVocabulary ? "text-green-500" : "text-red-500"
+                one.studyProgress.timesCorrect >
+                one.studyProgress.timesIncorrect;
+              if (one.studyProgress.timesPractice >= 1) {
+                return (
+                  <tr
+                    className={`border-b border-gray-200 ${
+                      index % 2 === 0 ? "bg-gray-50" : "bg-white"
                     }`}
+                    key={index}
                   >
-                    {knowThisVocabulary ? "Ano" : "Ne"}
-                  </td>
-                  {/* ... ostatní buňky tabulky ... */}
-                </tr>
-              );
+                    {/* ... ostatní buňky tabulky ... */}
+                    <td
+                      onClick={() => showModal(one)}
+                      className="group relative text-left px-8 py-4 text-blue-600 cursor-pointer "
+                    >
+                      {one.czechWord}
+                    </td>
+
+                    <td className="text-left px-8 py-4">{one.englishWord}</td>
+                    <td className="text-left px-8 py-4">
+                      {one.studyProgress.timesPractice}
+                    </td>
+                    <td className="text-left px-8 py-4">
+                      {one.studyProgress.timesCorrect}
+                    </td>
+                    <td className="text-left px-8 py-4">
+                      {one.studyProgress.timesIncorrect}
+                    </td>
+                    <td
+                      className={`px-8 py-4 ${
+                        knowThisVocabulary ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {knowThisVocabulary ? "Ano" : "Ne"}
+                    </td>
+                  </tr>
+                );
+              }
             })}
           </tbody>
         </table>

@@ -1,16 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { vocabulary } from "../data/vocabulary";
 import { UseEnglish } from "../context/EnglishContext";
+import SummaryProgress from "./SummaryProgress";
 
 const ExerciseENfromCZ = () => {
-  const {
-    loggedUser,
-    setLoggedUser,
-    rightAnswerProgress,
-    wrongAnswerProgress,
-  } = UseEnglish();
-
-  // console.log(loggedUser);
+  const { loggedUser, rightProgress, eliminatedThisVocabulary, WrongProgress } =
+    UseEnglish();
 
   const [start, setStart] = useState(true);
   const [wordCZ, setWordCZ] = useState("");
@@ -23,65 +17,59 @@ const ExerciseENfromCZ = () => {
   const [wrongAnswer, setWrongAnswer] = useState("");
   const [isFomrSend, setIsFormSend] = useState(false);
   const [actualyVocabulary, setActulyVocabulary] = useState([]);
-  const [id, setId] = useState("");
-  const [userCurrentWord, setUserCurrentWord] = useState([]);
+  const [idVocabulary, setIdVocabulary] = useState("");
+  const [idLoggedUser, setIdLoggedUser] = useState(loggedUser.id);
 
   //system for random word
   const generatorRandomNumber = () => {
-    const min = 0;
-    const max = vocabulary.length - 1;
+    // Filtrování slovíček, která nebyla vyřazena
+    const filteredVocabulary = loggedUser.studyVocabulary.filter(
+      (item) => item.eliminated === false
+    );
 
-    // calculation
-    const random = Math.floor(Math.random() * (max - min + 1));
+    if (filteredVocabulary.length === 0) {
+      console.log("Všechna slovíčka byla vyřazena.");
+      return; // nebo můžete zde nastavit nějaké chování, když nejsou žádná slovíčka k procvičení
+    }
 
-    setActulyVocabulary(vocabulary[random]);
-    setWordCZ(vocabulary[random].czechWord);
-    setWordEN(vocabulary[random].englishWord);
-    setAccent(vocabulary[random].accent);
-    setId(vocabulary[random].id);
+    // Výběr náhodného indexu ze zbylých slovíček
+    const randomIndex = Math.floor(Math.random() * filteredVocabulary.length);
 
-    // Nalzenení slovíčka od uživatele pro vypsání hodnot - zatím mi nefunguje
-    // const findThisUserVocabulary = () => {
-    //   const foundWord = loggedUser.studyVocabulary.find(one => one.id === id);
+    // Nastavení aktuálního slovíčka pomocí náhodného indexu
+    const selectedVocabulary = filteredVocabulary[randomIndex];
+    setActulyVocabulary(selectedVocabulary);
+    setWordCZ(selectedVocabulary.czechWord);
+    setWordEN(selectedVocabulary.englishWord);
+    setAccent(selectedVocabulary.accent);
+    setIdVocabulary(selectedVocabulary.id);
 
-    //   if (foundWord) {
-    //     setUserCurrentWord(foundWord);
-    //   } else {
-    //     // Nenalezli jsme slovo, tak nastavíme vše na nuly
-    //     setUserCurrentWord(false);
-    //   }
-    // };
-
-    // findThisUserVocabulary()
-
-    // clear input answer
+    // Vynulování předchozích odpovědí
     setAnswer("");
-
     setIsFormSend(false);
     setRightAnswer("");
     setWrongAnswer("");
   };
-  //   console.log(actualyVocabulary.englishOption);
 
-  // System for check correct answer
+  //Kontrola odpovědí
   const submitForm = (e) => {
     e.preventDefault();
 
-    // answer comparison
     try {
-      if (wordCZ === answer) {
+      if (wordCZ.toLowerCase() === answer.toLowerCase()) {
         setCorrectly(true);
-        setRightAnswer(`Tvá odpověď je správná.`);
-        rightAnswerProgress(actualyVocabulary);
+        setRightAnswer(`Tvá odpověď je správná. [${accent}]`);
+        rightProgress(idLoggedUser, idVocabulary);
       } else if (actualyVocabulary.englishOption.includes(answer)) {
         setCorrectly(false);
-        setRightAnswer(`Skoro správně, přesná odpověd je ${wordCZ}.`);
+        setRightAnswer(
+          `Skoro správně, přesná odpověd je ${wordCZ}. [${accent}]`
+        );
         setSecondCorretly(true);
-        rightAnswerProgress(actualyVocabulary);
+        rightProgress(idLoggedUser, idVocabulary);
       } else {
         setCorrectly(false);
-        setWrongAnswer(`Chyba, správná odpověď je: ${wordCZ}`);
-        wrongAnswerProgress(actualyVocabulary);
+        setWrongAnswer(`Chyba, správná odpověď je: ${wordEN} [${accent}]`);
+        WrongProgress(idLoggedUser, idVocabulary);
       }
     } catch (error) {
       console.error(error);
@@ -90,105 +78,83 @@ const ExerciseENfromCZ = () => {
   };
 
   return (
-    <div className="w-full p-4">
-      <div>
-        <div className="h-[50px] w-[800px] m-auto border-t border-l border-r  bg-sky-400">
-          {/* Správnost slovíčka */}
-          {/* <section>
-        <div>
-          <div>Počet opakování</div>
-          <div>
- 
-  </div>
-        
-        </div>
-        <div>
-          <div>Správně zodpovězeno</div>
-          <div></div>
-          
-        </div>
-        <div>
-          <div>Špatně zodpovězeno</div>
-          <div></div>
-          
-        </div>
-        <div>
-          <div>Počet opakování</div>
-          <div></div>
-          
-        </div>
-      </section> */}
-        </div>
-
-        <div className="max-w-[800px] h-[450px]  border m-auto p-4 flex  items-center justify-center flex-col">
-          {start ? (
-            <button
-              className="text-xl bg-blue-400 px-4 py-2 rounded-xl hover:bg-blue-500 transition-all duration-100"
-              onClick={() => {
-                setStart(false);
-                generatorRandomNumber();
-              }}
-            >
-              Chcete začít
-            </button>
-          ) : (
-            <>
-              {/* Check */}
-              <div className="mb-10">
-                <div
-                  className={
-                    correctly
-                      ? "text-green-500"
-                      : secondCorrectly
-                      ? "text-orange-500"
-                      : "text-red-500"
-                  }
-                >
-                  {correctly
-                    ? rightAnswer
+    <div className="w-full p-4 bg-gray-100 flex flex-col justify-center items-center h-screen">
+      <SummaryProgress />
+      <div className="min-w-[800px] h-[500px] bg-white shadow-lg border border-gray-200 m-auto p-6 flex items-center justify-center flex-col rounded-lg">
+        {start ? (
+          <button
+            className="text-xl bg-blue-500 text-white px-6 py-3 rounded-lg hover:bg-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50"
+            onClick={() => {
+              setStart(false);
+              generatorRandomNumber();
+            }}
+          >
+            Chcete začít
+          </button>
+        ) : (
+          <>
+            <div className="mb-10 text-lg font-semibold">
+              <div
+                className={
+                  correctly
+                    ? "text-green-600"
                     : secondCorrectly
-                    ? rightAnswer
-                    : wrongAnswer}
-                </div>
-              </div>
-
-              {/* Words */}
-              <form
-                className="flex items-center justify-center flex-col"
-                onSubmit={submitForm}
+                    ? "text-yellow-600"
+                    : "text-red-600"
+                }
               >
-                {/* Words */}
-                <section className="flex gap-6 items-center justify-center">
-                  {/* Czech Word */}
-                  <div>{wordEN}</div>
-                  {/* English Word */}
-                  <input
-                    className="border-b-2 border-black bg-transparent outline-none pl-2 "
-                    type="text"
-                    value={answer}
-                    placeholder="write English word"
-                    onChange={(e) => setAnswer(e.target.value)}
-                  />
-                </section>
-                {/* Submit or next  */}
+                {correctly
+                  ? rightAnswer
+                  : secondCorrectly
+                  ? rightAnswer
+                  : wrongAnswer}
+              </div>
+            </div>
 
-                {isFomrSend ? (
+            <form
+              className="flex flex-col items-center justify-center"
+              onSubmit={submitForm}
+            >
+              <section className="flex gap-8 items-center justify-center">
+                <div className="text-gray-800 font-medium">{wordEN}</div>
+                <input
+                  className="border-b-2 border-gray-400 focus:border-blue-500 bg-transparent outline-none pl-2 text-lg"
+                  type="text"
+                  value={answer}
+                  placeholder="Napište anglické slovo"
+                  onChange={(e) => setAnswer(e.target.value)}
+                />
+              </section>
+
+              {isFomrSend ? (
+                <div>
+                  {" "}
                   <button
-                    className="mt-10 bg-blue-400 px-3 py-1 rounded-lg hover:bg-blue-500 transition-all duration-150 cursor-pointer "
+                    type="button"
+                    onClick={() =>
+                      eliminatedThisVocabulary(idLoggedUser, idVocabulary)
+                    }
+                    className="mt-3 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 mr-4"
+                  >
+                    Vyřadit
+                  </button>
+                  <button
+                    className="mt-10 bg-green-500 text-white px-4 py-2 rounded-lg hover:bg-green-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-green-700 focus:ring-opacity-50"
                     onClick={generatorRandomNumber}
                   >
                     Další slovíčko
                   </button>
-                ) : (
-                  <input
-                    className="mt-10 bg-blue-400 px-3 py-1 rounded-lg hover:bg-blue-500 transition-all duration-150  "
-                    type="submit"
-                  />
-                )}
-              </form>
-            </>
-          )}
-        </div>
+                </div>
+              ) : (
+                <input
+                  className="mt-10 cursor-pointer bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-blue-700 focus:ring-opacity-50"
+                  type="submit"
+                  value="Odeslat"
+                />
+              )}
+            </form>
+          </>
+        )}
       </div>
     </div>
   );

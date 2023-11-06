@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
-import {useNavigate} from "react-router-dom"
+import { useNavigate } from "react-router-dom";
 import { UseEnglish } from "../context/EnglishContext";
+import { vocabulary } from "../data/vocabulary";
 
 const Registration = () => {
   const { setRegistredUser, registredUser } = UseEnglish();
@@ -13,7 +14,7 @@ const Registration = () => {
   const [passwordSecond, setPasswordSecond] = useState("");
   const [passwordVisibility, setPasswordVisibility] = useState(false);
 
-  const navigate = useNavigate()
+  const navigate = useNavigate();
   // show write password
   const showPassword = () => {
     setPasswordVisibility(!passwordVisibility);
@@ -74,14 +75,14 @@ const Registration = () => {
         firstName: firstName,
         secondName: secondName,
         id: userName,
-        studyVocabulary:[],
+        studyVocabulary: vocabulary,
         allStudyProgress: [
           {
             timesAllPracticed: 0,
             timesCorrect: 0,
             timesIncorrect: 0,
-          },]
-          
+          },
+        ],
       };
       setRegistredUser([...registredUser, newUser]);
 
@@ -92,7 +93,7 @@ const Registration = () => {
       setPassword("");
       setPasswordSecond("");
 
-      navigate("/login")
+      navigate("/login");
 
       console.log(registredUser);
       // Poteé tam bude přesměrování na příhlašovací stránku
@@ -105,7 +106,9 @@ const Registration = () => {
         <h1 className="text-2xl font-bold text-center">Registrace</h1>
         <form onSubmit={sendForm} className="space-y-6">
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">Přihlašovací jméno</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Přihlašovací jméno
+            </label>
             <input
               value={userName}
               onChange={(e) => setUserName(e.target.value)}
@@ -115,7 +118,9 @@ const Registration = () => {
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">Křesní jméno</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Křesní jméno
+            </label>
             <input
               value={firstName}
               onChange={(e) => setFirstName(e.target.value)}
@@ -125,7 +130,9 @@ const Registration = () => {
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">Příjmení</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Příjmení
+            </label>
             <input
               value={secondName}
               onChange={(e) => setSecondName(e.target.value)}
@@ -135,7 +142,9 @@ const Registration = () => {
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">Heslo</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Heslo
+            </label>
             <input
               value={password}
               onChange={(e) => setPassword(e.target.value)}
@@ -145,7 +154,9 @@ const Registration = () => {
             />
           </div>
           <div>
-            <label className="block mb-2 text-sm font-medium text-gray-700">Heslo Kontrola</label>
+            <label className="block mb-2 text-sm font-medium text-gray-700">
+              Heslo Kontrola
+            </label>
             <input
               value={passwordSecond}
               onChange={(e) => setPasswordSecond(e.target.value)}
@@ -178,7 +189,6 @@ const Registration = () => {
       </div>
     </div>
   );
-  
 };
 
 export default Registration;

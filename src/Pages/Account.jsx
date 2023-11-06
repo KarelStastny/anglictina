@@ -9,10 +9,8 @@ const Account = () => {
   const [secondName, setSecondName] = useState(loggedUser.secondName);
   const [newPassword, setNewPassword] = useState("");
   const [confirmNewPassword, setConfirmNewPassword] = useState("");
-
   const [showPasswords, setShowPasswords] = useState(false);
   const [notification, setNotification] = useState("");
-
   const [currentPassword, setCurrentPassword] = useState("");
 
   const toggleShowPasswords = () => {
@@ -24,7 +22,10 @@ const Account = () => {
 
     if (currentPassword === loggedUser.password) {
       // Najděte uživatele v poli
-      let foundUser = user.find((user) => user.id.toLocaleLowerCase() === loggedUser.id.toLocaleLowerCase());
+      let foundUser = user.find(
+        (user) =>
+          user.id.toLocaleLowerCase() === loggedUser.id.toLocaleLowerCase()
+      );
       if (foundUser) {
         // Aktualizujte nalezeného uživatele
         foundUser.userName = userName;
@@ -37,10 +38,9 @@ const Account = () => {
           setNotification("Úspěšně jste aktualizovali své údaje včetně hesla");
         } else if (newPassword && newPassword !== confirmNewPassword) {
           setNotification("Nová hesla se neshodují");
-          return; // Přerušit funkci, pokud se hesla neshodují
+          return; 
         }
 
-  
         setLoggedUser(foundUser);
 
         // Reset formulářových polí
@@ -56,7 +56,7 @@ const Account = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-        <h1 className="">Chyba změny zatím fungují jen pro defaultního usera</h1>
+      <h1 className="">Chyba změny zatím fungují jen pro defaultního usera</h1>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -152,11 +152,8 @@ const Account = () => {
           </button>
         </div>
       </form>
-      
     </div>
   );
 };
 
 export default Account;
-
-

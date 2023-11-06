@@ -1,96 +1,168 @@
-import React,{useState, useEffect, createContext, useContext} from "react"
-
-import { user } from "../data/user"
-import { vocabulary } from "../data/vocabulary"
+import React, { useState, useEffect, createContext, useContext } from "react";
+import { user } from "../data/user";
 
 
 // Vytvoření kontextu
-const EnglishContext = createContext()
+const EnglishContext = createContext();
 
-export const EnglishContextProvider = ({children}) => {
-    const [loggedUser, setLoggedUser] = useState(user[0])
-    const [registredUser, setRegistredUser] = useState(user)
-    const [typeOfExercise, setTypeofExercise] = useState(false)
-    const [hamburgerMenu,setHamburgerMenu] = useState(false)
-  
+export const EnglishContextProvider = ({ children }) => {
+  const [loggedUser, setLoggedUser] = useState();
+  const [registredUser, setRegistredUser] = useState(user);
+  const [typeOfExercise, setTypeofExercise] = useState(false);
+  const [hamburgerMenu, setHamburgerMenu] = useState(false);
+
+  const rightProgress = (idLoggedUser, idVocabulary) => {
+    const updatedUsers = registredUser.map((user) => {
+      if (user.id === idLoggedUser) {
+        // Aktualizace pro allStudyProgress
+        const updatedAllStudyProgress = {
+          ...user.allStudyProgress[0],
+          timesAllPracticed: user.allStudyProgress[0].timesAllPracticed + 1,
+          timesCorrect: user.allStudyProgress[0].timesCorrect + 1,
+        };
+
+        // Aktualizace pro studyVocabulary
+        const updatedVocabulary = user.studyVocabulary.map((vocab) => {
+          if (vocab.id === idVocabulary) {
+            return {
+              ...vocab,
+              studyProgress: {
+                ...vocab.studyProgress,
+                timesPractice: vocab.studyProgress.timesPractice + 1,
+                timesCorrect: vocab.studyProgress.timesCorrect + 1,
+                tested: true,
+              },
+            };
+          }
+          return vocab;
+        });
+
+        // Aktualizace celého uživatelského objektu
+        const updatedUser = {
+          ...user,
+          allStudyProgress: [updatedAllStudyProgress],
+          studyVocabulary: updatedVocabulary,
+        };
+
+        // Aktualizace loggedUser, pokud je třeba
+        if (loggedUser && user.id === loggedUser.id) {
+          setLoggedUser(updatedUser);
+        }
+
+        return updatedUser;
+      }
+      return user;
+    });
+
+    // Nastavte aktualizované pole uživatelů jako nový stav
+    setRegistredUser(updatedUsers);
+
+  };
+
+  const WrongProgress = (idLoggedUser, idVocabulary) => {
+    const updatedUsers = registredUser.map((user) => {
+      if (user.id === idLoggedUser) {
+        // Aktualizace pro allStudyProgress
+        const updatedAllStudyProgress = {
+          ...user.allStudyProgress[0],
+          timesAllPracticed: user.allStudyProgress[0].timesAllPracticed + 1,
+          timesIncorrect: user.allStudyProgress[0].timesIncorrect + 1,
+        };
+
+        // Aktualizace pro studyVocabulary
+        const updatedVocabulary = user.studyVocabulary.map((vocab) => {
+          if (vocab.id === idVocabulary) {
+            return {
+              ...vocab,
+              studyProgress: {
+                ...vocab.studyProgress,
+                timesPractice: vocab.studyProgress.timesPractice + 1,
+                timesIncorrect: vocab.studyProgress.timesIncorrect + 1,
+                tested: true,
+              },
+            };
+          }
+          return vocab;
+        });
+
+        // Aktualizace celého uživatelského objektu
+        const updatedUser = {
+          ...user,
+          allStudyProgress: [updatedAllStudyProgress],
+          studyVocabulary: updatedVocabulary,
+        };
+
+        // Aktualizace loggedUser, pokud je třeba
+        if (loggedUser && user.id === loggedUser.id) {
+          setLoggedUser(updatedUser);
+        }
+
+        return updatedUser;
+      }
+      return user;
+    });
+
+    // Nastavte aktualizované pole uživatelů jako nový stav
+    setRegistredUser(updatedUsers);
  
+  };
 
-// Správně zodpovězené slovíčko + skoro správně
-    const rightAnswerProgress = (actualyVocabulary) => {
-        setLoggedUser(prevUser => {
-          // kopie stávajícího uživatele a jeho pokroku
-          let newUser = { ...prevUser };
-          newUser.allStudyProgress[0].timesAllPracticed += 1;
-          newUser.allStudyProgress[0].timesCorrect += 1
-
-        //   Heledání slovíčka
-          const existingVocab = newUser.studyVocabulary.find(vocab => vocab.id === actualyVocabulary.id)
-           
-        //   Pokud slovíčko existuje
-        if(existingVocab){
-            existingVocab.studyProgress[0].timesPractice += 1;
-            existingVocab.studyProgress[0].timesCorrect += 1;
-        }else {
-            // Slovíčko neexistuje, přidáme ho do pole s inicializovaným studyProgress
-            newUser.studyVocabulary.push({
-              ...actualyVocabulary,
-              studyProgress: [{
-                timesPractice: 1,
-                timesCorrect: 1,
-                timesIncorrect: 0,
-                learned: false
-              }]
-            });
+  const eliminatedThisVocabulary = (idLoggedUser, idVocabulary) => {
+    const updatedUsers = registredUser.map((user) => {
+      if (user.id === idLoggedUser) {
+        // Aktualizace pro studyVocabulary
+        const updatedVocabulary = user.studyVocabulary.map((vocab) => {
+          if (vocab.id === idVocabulary) {
+            return {
+              ...vocab,
+              eliminated: true,
+            };
           }
-        
-          return newUser;
+          return vocab;
         });
-      };
 
-      // Správně zodpovězené slovíčko + skoro správně
-    const wrongAnswerProgress = (actualyVocabulary) => {
-        setLoggedUser(prevUser => {
-          // kopie stávajícího uživatele a jeho pokroku
-          let newUser = { ...prevUser };
-          newUser.allStudyProgress[0].timesAllPracticed += 1;
-          newUser.allStudyProgress[0].timesIncorrect += 1
+        // Aktualizace celého uživatelského objektu
+        const updatedUser = {
+          ...user,
+          studyVocabulary: updatedVocabulary,
+        };
 
-        //   Heledání slovíčka
-          const existingVocab = newUser.studyVocabulary.find(vocab => vocab.id === actualyVocabulary.id)
-           
-        //   Pokud slovíčko existuje
-        if(existingVocab){
-            existingVocab.studyProgress[0].timesPractice += 1;
-            existingVocab.studyProgress[0].timesIncorrect += 1;
-        }else {
-            // Slovíčko neexistuje, přidáme ho do pole s inicializovaným studyProgress
-            newUser.studyVocabulary.push({
-              ...actualyVocabulary,
-            
-              studyProgress: [{
-                timesPractice: 1,
-                timesCorrect: 0,
-                timesIncorrect: 1,
-                learned: false
-              }]
-            });
-          }
-        
-          return newUser;
-        });
-      };
+        // Aktualizace loggedUser, pokud je třeba
+        if (loggedUser && user.id === loggedUser.id) {
+          setLoggedUser(updatedUser);
+        }
 
+        return updatedUser;
+      }
+      return user;
+    });
 
-      
+    // Nastavení aktualizovaného pole uživatelů jako nového stavu
+    setRegistredUser(updatedUsers);
+  };
 
-
-    return(<EnglishContext.Provider value={{loggedUser, setLoggedUser, rightAnswerProgress, wrongAnswerProgress, setRegistredUser, registredUser, typeOfExercise, setTypeofExercise,hamburgerMenu, setHamburgerMenu}}>
-        {children}
-    </EnglishContext.Provider>)
-}
-
+  return (
+    <EnglishContext.Provider
+      value={{
+        loggedUser,
+        setLoggedUser,
+        setRegistredUser,
+        registredUser,
+        typeOfExercise,
+        setTypeofExercise,
+        hamburgerMenu,
+        setHamburgerMenu,
+        rightProgress,
+        WrongProgress,
+        eliminatedThisVocabulary,
+      }}
+    >
+      {children}
+    </EnglishContext.Provider>
+  );
+};
 
 // Export kontextu
 export const UseEnglish = () => {
-    return useContext(EnglishContext)
-  }
+  return useContext(EnglishContext);
+};
