@@ -3,9 +3,10 @@ import { Link } from "react-router-dom";
 import { UseEnglish } from '../../context/EnglishContext';
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
+import LogOut from '../LogOut';
 
 const Navbar = () => {
-    const { loggedUser } = UseEnglish();
+    const { loggedUser, setLoggedUser } = UseEnglish();
     const [hamburgerMenu, setHamburgerMenu] = useState(false);
 
     return (
@@ -36,6 +37,10 @@ const Navbar = () => {
                           <li>
                               <Link to="/user" className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg">Uživatel</Link>
                           </li>
+                          <li>
+                              <Link to={"/"} onClick={() => setLoggedUser("")} className="text-white bg-red-600 hover:bg-red-700 px-3 py-2 rounded-md">Odhlásit se</Link>
+                          </li>
+                          
                       </>
                   )}
               </ul>
@@ -56,6 +61,9 @@ const Navbar = () => {
                           </li>
                           <li>
                               <Link to="/user" className="text-white hover:bg-indigo-700 px-3 py-2 rounded-md">Uživatel</Link>
+                          </li>
+                          <li>
+                              <Link to={"/"} onClick={() => setLoggedUser("")} className="text-white bg-red-600 hover:bg-red-700 px-3 py-2 rounded-md">Odhlásit se</Link>
                           </li>
                       </>
                   )}

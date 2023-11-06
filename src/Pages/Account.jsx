@@ -24,7 +24,7 @@ const Account = () => {
 
     if (currentPassword === loggedUser.password) {
       // Najděte uživatele v poli
-      let foundUser = user.find((user) => user.id === loggedUser.id);
+      let foundUser = user.find((user) => user.id.toLocaleLowerCase() === loggedUser.id.toLocaleLowerCase());
       if (foundUser) {
         // Aktualizujte nalezeného uživatele
         foundUser.userName = userName;
@@ -40,7 +40,7 @@ const Account = () => {
           return; // Přerušit funkci, pokud se hesla neshodují
         }
 
-        // Nyní nastavte aktualizovaného uživatele jako nový stav pomocí setLoggedUser
+  
         setLoggedUser(foundUser);
 
         // Reset formulářových polí
@@ -55,7 +55,8 @@ const Account = () => {
   };
 
   return (
-    <div className="flex justify-center items-center h-screen">
+    <div className="flex flex-col justify-center items-center h-screen">
+        <h1 className="">Chyba změny zatím fungují jen pro defaultního usera</h1>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
@@ -157,3 +158,5 @@ const Account = () => {
 };
 
 export default Account;
+
+
