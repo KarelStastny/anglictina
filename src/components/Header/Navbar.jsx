@@ -10,7 +10,7 @@ const Navbar = () => {
 
     return (
       <nav className="bg-indigo-900 p-3 flex items-center justify-between">
-          <h1 className="text-white text-xl">Angličtina</h1>
+          <h1 className="text-white text-xl"><Link to={"/"}>Angličtina</Link></h1>
           {/* Tlačítko pro mobilní menu */}
           <div onClick={() => setHamburgerMenu(!hamburgerMenu)} className='lg:hidden z-20 cursor-pointer'>
               {hamburgerMenu ? (

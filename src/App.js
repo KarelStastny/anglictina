@@ -6,6 +6,7 @@ import Login from "./Pages/Login"
 import Exercise from "./Pages/Exercise"
 import Registration from "./Pages/Registration"
 import Navbar from './components/Header/Navbar'
+import Account from './Pages/Account'
 
 const App = () => {
   return (
@@ -17,6 +18,7 @@ const App = () => {
         <Route path='/registration' element={<Registration/>}/>
         <Route path='/user' element={<User/>}/>
         <Route path='/exercise' element={<Exercise/>}/>
+        <Route path='/account' element={<Account/>}/>
      
       </Routes>
 
