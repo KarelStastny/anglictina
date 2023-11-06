@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/anglictina/static/css/main.7c85e867.css",
-    "main.js": "/anglictina/static/js/main.564389ea.js",
+    "main.css": "/anglictina/static/css/main.5596d20c.css",
+    "main.js": "/anglictina/static/js/main.428d7fd3.js",
     "index.html": "/anglictina/index.html",
-    "main.7c85e867.css.map": "/anglictina/static/css/main.7c85e867.css.map",
-    "main.564389ea.js.map": "/anglictina/static/js/main.564389ea.js.map"
+    "main.5596d20c.css.map": "/anglictina/static/css/main.5596d20c.css.map",
+    "main.428d7fd3.js.map": "/anglictina/static/js/main.428d7fd3.js.map"
   },
   "entrypoints": [
-    "static/css/main.7c85e867.css",
-    "static/js/main.564389ea.js"
+    "static/css/main.5596d20c.css",
+    "static/js/main.428d7fd3.js"
   ]
 }
