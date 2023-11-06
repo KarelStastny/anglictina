@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UseEnglish } from "../context/EnglishContext";
 import { useNavigate } from "react-router";
+import LogOut from "../components/LogOut";
 
 const Login = () => {
   const { setRegistredUser, registredUser, setLoggedUser, loggedUser } = UseEnglish();
@@ -11,28 +12,27 @@ const Login = () => {
 
   const navigate  = useNavigate()
 
-  // show write password
+  // zobrazí napsané heslo
   const showPassword = () => {
     setPasswordVisibility(!passwordVisibility);
   };
 
-  const sendForm = (event) => {
-    event.preventDefault(); // Toto zabraňuje obnovení stránky.
 
+  // Validace formuláře
+  const sendForm = (event) => {
+    event.preventDefault(); 
+
+    // kontrola co je vyplněné
     if (!userName || !password) {
       setNotification("nevyplnili jste jméno nebo heslo");
     } 
     
-    
-    
-    
-    
-    
-      // Find the registered user
+  
+  //  Hledání zda uživatel už není registrovaný
       const user = registredUser.find(u => u.id === userName && u.password === password);
 
       if (user) {
-        setLoggedUser(user); // Set the logged in user in the context
+        setLoggedUser(user); 
         setNotification("Uživatel úspěšně přihlášen.");
         console.log(user);
         navigate("/")
@@ -41,10 +41,11 @@ const Login = () => {
       }
     };
 
-  // Tato část by měla být mimo sendForm
+ 
   return (
     <div className="flex items-center justify-center h-screen bg-gray-100">
-      <div className="w-full max-w-md p-6 bg-white shadow-md overflow-hidden sm:rounded-lg">
+
+      {loggedUser ? (<LogOut/>) : (<div className="w-full max-w-md  p-6 bg-white shadow-md overflow-hidden sm:rounded-lg">
         <h2 className="mt-6 text-center text-3xl leading-9 font-extrabold text-gray-900">
           Prosím přihlašte se
         </h2>
@@ -107,7 +108,11 @@ const Login = () => {
         {notification && <p className="mt-2 text-center text-sm leading-5 text-gray-600">
           {notification}
         </p>}
-      </div>
+      </div>)}
+
+
+
+      
     </div>
   );
   

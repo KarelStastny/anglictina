@@ -19,10 +19,10 @@ const Navbar = () => {
         <Link to="/exercise" className="text-white hover:bg-indigo-700 px-3 py-2 rounded-md">Procvičování</Link>
       </li>
         }
-        
+          {loggedUser && 
         <li>
           <Link to="/user" className="text-white hover:bg-indigo-700 px-3 py-2 rounded-md">Uživatel</Link>
-        </li>
+        </li>}
       </ul>
     </nav>
   )
