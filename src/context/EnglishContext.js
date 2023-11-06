@@ -10,6 +10,7 @@ const EnglishContext = createContext()
 export const EnglishContextProvider = ({children}) => {
     const [loggedUser, setLoggedUser] = useState(user[0])
     const [registredUser, setRegistredUser] = useState(user)
+    const [typeOfExercise, setTypeofExercise] = useState(false)
   
  
 
@@ -82,7 +83,7 @@ export const EnglishContextProvider = ({children}) => {
       
 
 
-    return(<EnglishContext.Provider value={{loggedUser, setLoggedUser, rightAnswerProgress, wrongAnswerProgress, setRegistredUser, registredUser}}>
+    return(<EnglishContext.Provider value={{loggedUser, setLoggedUser, rightAnswerProgress, wrongAnswerProgress, setRegistredUser, registredUser, typeOfExercise, setTypeofExercise}}>
         {children}
     </EnglishContext.Provider>)
 }
