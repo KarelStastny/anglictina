@@ -85,6 +85,8 @@ const User = () => {
               <th className="text-left pl-8">Správně zodpovězeno</th>
               <th className="text-left pl-8">Chybně zodpovězeno</th>
               <th className="text-left pl-8">Umím slovíčko?</th>
+              <th className="text-left pl-8">Vyřazeno z Opakování?</th>
+
             </tr>
           </thead>
           {/* Modální okno */}
@@ -142,6 +144,10 @@ const User = () => {
               const knowThisVocabulary =
                 one.studyProgress.timesCorrect >
                 one.studyProgress.timesIncorrect;
+
+             
+
+
               if (one.studyProgress.timesPractice >= 1) {
                 return (
                   <tr
@@ -174,6 +180,14 @@ const User = () => {
                       }`}
                     >
                       {knowThisVocabulary ? "Ano" : "Ne"}
+                    </td>
+                    <td
+                      className={`px-8 py-4 ${
+                        one.eliminated ? "text-green-500" : "text-red-500"
+                      }`}
+                    >
+                      {one.eliminated ? "Ano" : "Ne"}
+                
                     </td>
                   </tr>
                 );

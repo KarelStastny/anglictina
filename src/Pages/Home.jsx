@@ -26,6 +26,14 @@ const Home = () => {
                 Začít procvičovat
               </Link>
             </div>
+            <div>
+              <h2>Popis Aplikace</h2>
+              <ul>
+                <li>možnost registrace</li>
+                <li>přihlásit se</li>
+                <li>.... doplnit vše co umí</li>
+              </ul>
+            </div>
           </div>
         ) : (
           <div className="text-center">
