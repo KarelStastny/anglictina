@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import { UseEnglish } from "../context/EnglishContext";
-import Account from "./Account";
 import { Link } from "react-router-dom";
 
 const User = () => {
@@ -13,7 +12,6 @@ const User = () => {
     firstName,
     secondName,
     allStudyProgress = [],
-    studyVocabulary = [],
   } = loggedUser;
 
   const showModal = (wordDetails) => {

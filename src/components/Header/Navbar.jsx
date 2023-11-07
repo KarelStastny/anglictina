@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { UseEnglish } from "../../context/EnglishContext";
 import { RxHamburgerMenu } from "react-icons/rx";
 import { AiOutlineClose } from "react-icons/ai";
-import LogOut from "../LogOut";
+
 
 const Navbar = () => {
   const { loggedUser, setLoggedUser } = UseEnglish();
@@ -50,6 +50,14 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+           <li>
+                <Link
+                  to="/info"
+                  className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
+                >
+                  Technické Info
+                </Link>
+                </li>
 
           {loggedUser && (
             <>
@@ -103,6 +111,14 @@ const Navbar = () => {
               </Link>
             </li>
           )}
+            <li>
+                <Link
+                  to="/info"
+                  className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
+                >
+                  Technické Info
+                </Link>
+                </li>
 
           {loggedUser && (
             <>

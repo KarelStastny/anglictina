@@ -1,17 +1,22 @@
-import React, { useState, useEffect, createContext, useContext } from "react";
+import React, { useState, createContext, useContext, useEffect } from "react";
 import { user } from "../data/user";
 
 // Vytvoření kontextu
 const EnglishContext = createContext();
 
 export const EnglishContextProvider = ({ children }) => {
-  const [loggedUser, setLoggedUser] = useState(user[0]);
+  const [loggedUser, setLoggedUser] = useState();
   const [registredUser, setRegistredUser] = useState(user);
   const [typeOfExercise, setTypeofExercise] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
-  const [filtredSystem, setFiltredSystem] = useState(loggedUser.studyVocabulary);
+  const [filtredSystem, setFiltredSystem] = useState( []);
 
-  // Filtrovací systém pro slovíčka
+// Uložení slovíček pokud se uživatel přihlásí
+  useEffect(() => {
+    if (loggedUser) {
+      setFiltredSystem(loggedUser.studyVocabulary || []);
+    }
+  }, [loggedUser]);
 
 
   const rightProgress = (idLoggedUser, idVocabulary) => {

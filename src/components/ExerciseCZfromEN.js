@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { UseEnglish } from "../context/EnglishContext";
 import SummaryProgress from "./SummaryProgress";
 
@@ -18,9 +18,9 @@ const ExerciseENfromCZ = () => {
   const [isFomrSend, setIsFormSend] = useState(false);
   const [actualyVocabulary, setActulyVocabulary] = useState([]);
   const [idVocabulary, setIdVocabulary] = useState("");
-  const [idLoggedUser, setIdLoggedUser] = useState(loggedUser.id);
   const [notification, setNotification] = useState("");
   const [noVocabulary, setNoVocabulary] = useState("")
+  const idLoggedUser = loggedUser.id
 
   //system for random word
   const generatorRandomNumber = () => {

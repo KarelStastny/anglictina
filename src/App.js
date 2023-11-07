@@ -7,6 +7,7 @@ import Exercise from "./Pages/Exercise"
 import Registration from "./Pages/Registration"
 import Navbar from './components/Header/Navbar'
 import Account from './Pages/Account'
+import Info from "./Pages/Info"
 
 const App = () => {
   return (
@@ -19,6 +20,8 @@ const App = () => {
         <Route path='/user' element={<User/>}/>
         <Route path='/exercise' element={<Exercise/>}/>
         <Route path='/account' element={<Account/>}/>
+        <Route path='/info' element={<Info/>}/>
+        {/* <Route path='/anglictina' element={<Home/>}/> */}
      
       </Routes>
 

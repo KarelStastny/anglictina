@@ -4,7 +4,7 @@ import ExerciseCZfromEN from "../components/ExerciseCZfromEN";
 import { UseEnglish } from "../context/EnglishContext";
 
 const Exercise = () => {
-  const {filtredSystem, setFiltredSystem, loggedUser} = UseEnglish()
+  const {setFiltredSystem, loggedUser} = UseEnglish()
   const [typeExercise, setTypeExercise] = useState("");
   const [levels, setLevels] = useState({
     A1: true,
