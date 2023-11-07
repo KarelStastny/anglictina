@@ -31,10 +31,11 @@ const Navbar = () => {
           hamburgerMenu ? "translate-x-0" : "-translate-x-full"
         } transition duration-300 ease-in-out`}
       >
-        <ul className="text-white">
+        <ul className="text-white gap-4 flex flex-col mt-12">
           <li>
             <Link
               to="/"
+              onClick={() => setHamburgerMenu(false)}
               className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
             >
               Home
@@ -43,6 +44,7 @@ const Navbar = () => {
           {!loggedUser && (
             <li>
               <Link
+              onClick={() => setHamburgerMenu(false)}
                 to="/login"
                 className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
               >
@@ -52,6 +54,7 @@ const Navbar = () => {
           )}
            <li>
                 <Link
+                onClick={() => setHamburgerMenu(false)}
                   to="/info"
                   className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
                 >
@@ -63,6 +66,7 @@ const Navbar = () => {
             <>
               <li>
                 <Link
+                onClick={() => setHamburgerMenu(false)}
                   to="/exercise"
                   className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
                 >
@@ -71,6 +75,7 @@ const Navbar = () => {
               </li>
               <li>
                 <Link
+                onClick={() => setHamburgerMenu(false)}
                   to="/user"
                   className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
                 >
@@ -80,7 +85,7 @@ const Navbar = () => {
               <li>
                 <Link
                   to={"/"}
-                  onClick={() => setLoggedUser("")}
+                  onClick={() => {setLoggedUser(""); setHamburgerMenu(false)}}
                   className="text-white bg-red-600 hover:bg-red-700 px-3 py-2 rounded-md"
                 >
                   Odhlásit se

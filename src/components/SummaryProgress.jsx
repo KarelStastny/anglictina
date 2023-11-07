@@ -5,7 +5,7 @@ const SummaryProgress = () => {
   const { loggedUser } = UseEnglish();
 
   return (
-    <div className='w-[800px] bg-gray-100 p-4 rounded-lg shadow'>
+    <div className=' md:w-[600px] lg:w-[800px] xl:w-[1000px] w-[300px] bg-gray-100 p-4 rounded-lg shadow'>
       {loggedUser.allStudyProgress.map((one, index) => (
         <div key={index} className="mb-4 last:mb-0">
           <div className='flex justify-between items-center'>

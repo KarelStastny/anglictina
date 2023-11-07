@@ -51,60 +51,25 @@ const Exercise = () => {
           </div>
 
           {/* Úrovně */}
-          <section>
-            <h1>Úrovně</h1>
-            <div>
-          <input
-            type="checkbox"
-            checked={levels["A1"]}
-            onChange={() => handleCheckboxChange("A1")}
-          />
-          <label>A1</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={levels["A2"]}
-            onChange={() => handleCheckboxChange("A2")}
-          />
-          <label>A2</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={levels["B1"]}
-            onChange={() => handleCheckboxChange("B1")}
-          />
-          <label>B1</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={levels["B2"]}
-            onChange={() => handleCheckboxChange("B2")}
-          />
-          <label>B2</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={levels["C1"]}
-            onChange={() => handleCheckboxChange("C1")}
-          />
-          <label>C1</label>
-        </div>
-        <div>
-          <input
-            type="checkbox"
-            checked={levels["C2"]}
-            onChange={() => handleCheckboxChange("C2")}
-          />
-          <label>C2</label>
-        </div>
- 
-        
-          
-          </section>
+          <section className="p-4">
+  
+  <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+    {["A1", "A2", "B1", "B2", "C1", "C2"].map(level => (
+      <div key={level} className="flex items-center space-x-2">
+        <input
+          type="checkbox"
+          checked={levels[level]}
+          onChange={() => handleCheckboxChange(level)}
+          className="accent-blue-600"
+        />
+        <label className="text-lg text-gray-700">{level}</label>
+      </div>
+    ))}
+  </div>
+</section>
+
+
+
 
           <div className="space-x-4 mb-8">
             <button
