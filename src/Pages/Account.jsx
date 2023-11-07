@@ -1,9 +1,9 @@
 import React, { useState, useContext } from "react";
 import { UseEnglish } from "../context/EnglishContext";
-import { user } from "../data/user";
 
 const Account = () => {
-  const { loggedUser, setLoggedUser } = UseEnglish();
+  const { loggedUser, setLoggedUser, registredUser, setRegistredUser } =
+    UseEnglish();
   const [userName, setUserName] = useState(loggedUser.userName);
   const [firstName, setFirstName] = useState(loggedUser.firstName);
   const [secondName, setSecondName] = useState(loggedUser.secondName);
@@ -21,34 +21,44 @@ const Account = () => {
     e.preventDefault();
 
     if (currentPassword === loggedUser.password) {
-      // Najděte uživatele v poli
-      let foundUser = user.find(
+      // Najděte a aktualizujte uživatele v registredUser
+      const updatedUsers = registredUser.map((user) => {
+        if (user.id.toLocaleLowerCase() === loggedUser.id.toLocaleLowerCase()) {
+          let updatedUser = {
+            ...user,
+            userName: userName,
+            firstName: firstName,
+            secondName: secondName,
+          };
+
+          // Aktualizace hesla, pokud je potřeba
+          if (newPassword && newPassword === confirmNewPassword) {
+            updatedUser.password = newPassword;
+            setNotification(
+              "Úspěšně jste aktualizovali své údaje včetně hesla"
+            );
+          } else if (newPassword && newPassword !== confirmNewPassword) {
+            setNotification("Nová hesla se neshodují");
+            return;
+          }
+          return updatedUser;
+        }
+        return user;
+      });
+
+      // Aktualizace celkového seznamu uživatelů a přihlášeného uživatele
+      setRegistredUser(updatedUsers);
+      const updatedLoggedUser = updatedUsers.find(
         (user) =>
           user.id.toLocaleLowerCase() === loggedUser.id.toLocaleLowerCase()
       );
-      if (foundUser) {
-        // Aktualizujte nalezeného uživatele
-        foundUser.userName = userName;
-        foundUser.firstName = firstName;
-        foundUser.secondName = secondName;
+      setLoggedUser(updatedLoggedUser);
 
-        // Pokud je potřeba aktualizovat heslo
-        if (newPassword && newPassword === confirmNewPassword) {
-          foundUser.password = newPassword;
-          setNotification("Úspěšně jste aktualizovali své údaje včetně hesla");
-        } else if (newPassword && newPassword !== confirmNewPassword) {
-          setNotification("Nová hesla se neshodují");
-          return; 
-        }
-
-        setLoggedUser(foundUser);
-
-        // Reset formulářových polí
-        setConfirmNewPassword("");
-        setCurrentPassword("");
-        setNewPassword("");
-        setNotification("Úspěšně jste aktualizovali své údaje");
-      }
+      // Reset formulářových polí
+      setConfirmNewPassword("");
+      setCurrentPassword("");
+      setNewPassword("");
+      setNotification("Úspěšně jste aktualizovali své údaje");
     } else {
       setNotification("Aktuální heslo je špatně");
     }
@@ -56,7 +66,6 @@ const Account = () => {
 
   return (
     <div className="flex flex-col justify-center items-center h-screen">
-      <h1 className="">Chyba změny zatím fungují jen pro defaultního usera</h1>
       <form
         onSubmit={handleSubmit}
         className="w-full max-w-lg bg-white shadow-md rounded px-8 pt-6 pb-8 mb-4"
