@@ -37,7 +37,7 @@ const Exercise = () => {
       )}
       {typeExercise === "CZ-EN" && <ExerciseCZfromEN />}
       {typeExercise === "EN-CZ" && <ExerciseENfromCZ />}
-      {typeExercise && <SummaryProgress />}{" "}
+      {/* {typeExercise && <SummaryProgress />}{" "} */}
       {/* Přidáno pro zobrazení pokroku */}
     </div>
   );

@@ -19,6 +19,7 @@ const ExerciseENfromCZ = () => {
   const [actualyVocabulary, setActulyVocabulary] = useState([]);
   const [idVocabulary, setIdVocabulary] = useState("");
   const [idLoggedUser, setIdLoggedUser] = useState(loggedUser.id);
+  const [notification, setNotification] = useState("");
 
   //system for random word
   const generatorRandomNumber = () => {
@@ -48,33 +49,39 @@ const ExerciseENfromCZ = () => {
     setIsFormSend(false);
     setRightAnswer("");
     setWrongAnswer("");
+    setNotification("");
+    setCorrectly(null);
+    setSecondCorretly(null);
   };
 
   //Kontrola odpovědí
   const submitForm = (e) => {
     e.preventDefault();
-
-    try {
-      if (wordCZ.toLowerCase() === answer.toLowerCase()) {
-        setCorrectly(true);
-        setRightAnswer(`Tvá odpověď je správná. [${accent}]`);
-        rightProgress(idLoggedUser, idVocabulary);
-      } else if (actualyVocabulary.englishOption.includes(answer)) {
-        setCorrectly(false);
-        setRightAnswer(
-          `Skoro správně, přesná odpověd je ${wordCZ}. [${accent}]`
-        );
-        setSecondCorretly(true);
-        rightProgress(idLoggedUser, idVocabulary);
-      } else {
-        setCorrectly(false);
-        setWrongAnswer(`Chyba, správná odpověď je: ${wordEN} [${accent}]`);
-        WrongProgress(idLoggedUser, idVocabulary);
+    const evaluateAndSetState = () => {
+      try {
+        if (wordCZ.toLowerCase() === answer.toLowerCase()) {
+          setCorrectly(true);
+          setRightAnswer(`Tvá odpověď je správná. [${accent}]`);
+          rightProgress(idLoggedUser, idVocabulary);
+        } else if (actualyVocabulary.englishOption.includes(answer)) {
+          setCorrectly(false);
+          setRightAnswer(
+            `Skoro správně, přesná odpověd je ${wordCZ}. [${accent}]`
+          );
+          setSecondCorretly(true);
+          rightProgress(idLoggedUser, idVocabulary);
+        } else {
+          setCorrectly(false);
+          setWrongAnswer(`Chyba, správná odpověď je: ${wordEN} [${accent}]`);
+          WrongProgress(idLoggedUser, idVocabulary);
+        }
+      } catch (error) {
+        console.error(error);
       }
-    } catch (error) {
-      console.error(error);
-    }
-    setIsFormSend(true);
+      setIsFormSend(true);
+    };
+    // Použití setTimeout k odložení vyhodnocení
+    setTimeout(evaluateAndSetState, 300);
   };
 
   return (
@@ -131,9 +138,12 @@ const ExerciseENfromCZ = () => {
                   {" "}
                   <button
                     type="button"
-                    onClick={() =>
-                      eliminatedThisVocabulary(idLoggedUser, idVocabulary)
-                    }
+                    onClick={() => {
+                      eliminatedThisVocabulary(idLoggedUser, idVocabulary);
+                      setNotification(
+                        "Slovíčko bylo úspěšně vymazáno z procvičování"
+                      );
+                    }}
                     className="mt-3 bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 mr-4"
                   >
                     Vyřadit
@@ -144,6 +154,7 @@ const ExerciseENfromCZ = () => {
                   >
                     Další slovíčko
                   </button>
+                  <div>{notification}</div>
                 </div>
               ) : (
                 <input
