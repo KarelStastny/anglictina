@@ -451,19 +451,6 @@ export const vocabulary = [
   studyProgress: createStudyProgress()
 },
 {
-  id: "eloquence-noun",
-  englishWord: "eloquence",
-  accent: "elokvence",
-  czechWord: "výmluvnost",
-  category: "communication",
-  type: "noun",
-  hard: "C1",
-  eliminated: false,
-  englishOption: ["eloquence", "articulateness", "rhetoric", "expressiveness", "persuasiveness", "fluency", "oratory", "articulation", "verbosity", "diction"],
-  czechOption: ["výmluvnost", "umění rétoriky", "výraznost", "přesvědčivost", "plynulost", "řečnictví", "artikulace", "slovnost", "dikce", "formulace"],
-  studyProgress: createStudyProgress()
-},
-{
   id: "paradigm-noun",
   englishWord: "paradigm",
   accent: "paradajm",
@@ -502,19 +489,7 @@ export const vocabulary = [
   czechOption: ["nejpodstatnější", "základní", "ultimátní", "typický", "dokonalý", "ideální", "archetypální", "klasický", "modelový", "reprezentativní"],
   studyProgress: createStudyProgress()
 },
-{
-  id: "epistemology-noun",
-  englishWord: "epistemology",
-  accent: "epistimoloji",
-  czechWord: "epistemologie",
-  category: "philosophy",
-  type: "noun",
-  hard: "C2",
-  eliminated: false,
-  englishOption: ["epistemology", "philosophy of knowledge", "theory of knowledge", "cognition study", "intellectualism", "rationalism", "empiricism", "knowledge theory", "metacognition", "philosophical study"],
-  czechOption: ["epistemologie", "filozofie poznání", "teorie poznání", "studium kognice", "intelektualismus", "racionalismus", "empirismus", "teorie znalostí", "metakognice", "filozofické studium"],
-  studyProgress: createStudyProgress()
-},
+
 {
   id: "epistemology-noun",
   englishWord: "epistemology",

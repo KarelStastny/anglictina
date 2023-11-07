@@ -1,7 +1,6 @@
 import React, { useState, useEffect, createContext, useContext } from "react";
 import { user } from "../data/user";
 
-
 // Vytvoření kontextu
 const EnglishContext = createContext();
 
@@ -10,6 +9,10 @@ export const EnglishContextProvider = ({ children }) => {
   const [registredUser, setRegistredUser] = useState(user);
   const [typeOfExercise, setTypeofExercise] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
+  const [filtredSystem, setFiltredSystem] = useState(loggedUser.studyVocabulary);
+
+  // Filtrovací systém pro slovíčka
+
 
   const rightProgress = (idLoggedUser, idVocabulary) => {
     const updatedUsers = registredUser.map((user) => {
@@ -56,7 +59,6 @@ export const EnglishContextProvider = ({ children }) => {
 
     // Nastavte aktualizované pole uživatelů jako nový stav
     setRegistredUser(updatedUsers);
-
   };
 
   const WrongProgress = (idLoggedUser, idVocabulary) => {
@@ -104,7 +106,6 @@ export const EnglishContextProvider = ({ children }) => {
 
     // Nastavte aktualizované pole uživatelů jako nový stav
     setRegistredUser(updatedUsers);
- 
   };
 
   const eliminatedThisVocabulary = (idLoggedUser, idVocabulary) => {
@@ -155,6 +156,8 @@ export const EnglishContextProvider = ({ children }) => {
         rightProgress,
         WrongProgress,
         eliminatedThisVocabulary,
+        filtredSystem,
+        setFiltredSystem,
       }}
     >
       {children}

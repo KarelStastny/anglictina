@@ -3,7 +3,7 @@ import { UseEnglish } from "../context/EnglishContext";
 import SummaryProgress from "./SummaryProgress";
 
 const ExerciseENfromCZ = () => {
-  const { loggedUser, rightProgress, eliminatedThisVocabulary, WrongProgress } =
+  const { loggedUser, rightProgress, eliminatedThisVocabulary, WrongProgress, filtredSystem } =
     UseEnglish();
 
   const [start, setStart] = useState(true);
@@ -20,24 +20,24 @@ const ExerciseENfromCZ = () => {
   const [idVocabulary, setIdVocabulary] = useState("");
   const [idLoggedUser, setIdLoggedUser] = useState(loggedUser.id);
   const [notification, setNotification] = useState("");
+  const [noVocabulary, setNoVocabulary] = useState("")
 
   //system for random word
   const generatorRandomNumber = () => {
-    // Filtrování slovíček, která nebyla vyřazena
-    const filteredVocabulary = loggedUser.studyVocabulary.filter(
-      (item) => item.eliminated === false
-    );
 
-    if (filteredVocabulary.length === 0) {
-      console.log("Všechna slovíčka byla vyřazena.");
-      return; // nebo můžete zde nastavit nějaké chování, když nejsou žádná slovíčka k procvičení
-    }
+      // pokud jsou všechny slovíčka vyřazena
+      if (filtredSystem.length === 0) {
+        setNoVocabulary("Všechna slovíčka byla vyřazena.");
+        return; 
+      }
+
+ 
 
     // Výběr náhodného indexu ze zbylých slovíček
-    const randomIndex = Math.floor(Math.random() * filteredVocabulary.length);
+    const randomIndex = Math.floor(Math.random() * filtredSystem.length);
 
     // Nastavení aktuálního slovíčka pomocí náhodného indexu
-    const selectedVocabulary = filteredVocabulary[randomIndex];
+    const selectedVocabulary = filtredSystem[randomIndex];
     setActulyVocabulary(selectedVocabulary);
     setWordCZ(selectedVocabulary.czechWord);
     setWordEN(selectedVocabulary.englishWord);
@@ -52,6 +52,7 @@ const ExerciseENfromCZ = () => {
     setNotification("");
     setCorrectly(null);
     setSecondCorretly(null);
+    setNoVocabulary('')
   };
 
   //Kontrola odpovědí
@@ -72,7 +73,7 @@ const ExerciseENfromCZ = () => {
           rightProgress(idLoggedUser, idVocabulary);
         } else {
           setCorrectly(false);
-          setWrongAnswer(`Chyba, správná odpověď je: ${wordEN} [${accent}]`);
+          setWrongAnswer(`Chyba, správná odpověď je: ${wordCZ} [${accent}]`);
           WrongProgress(idLoggedUser, idVocabulary);
         }
       } catch (error) {
@@ -86,7 +87,11 @@ const ExerciseENfromCZ = () => {
 
   return (
     <div className="w-full p-4 bg-gray-100 flex flex-col justify-center items-center h-screen">
+       <div>
       <SummaryProgress />
+      </div>
+    
+      <div>{noVocabulary}</div>
       <div className="min-w-[800px] h-[500px] bg-white shadow-lg border border-gray-200 m-auto p-6 flex items-center justify-center flex-col rounded-lg">
         {start ? (
           <button
