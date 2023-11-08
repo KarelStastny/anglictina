@@ -12,11 +12,11 @@ export const EnglishContextProvider = ({ children }) => {
   const [filtredSystem, setFiltredSystem] = useState( []);
 
 // Uložení slovíček pokud se uživatel přihlásí
-  useEffect(() => {
-    if (loggedUser) {
-      setFiltredSystem(loggedUser.studyVocabulary || []);
-    }
-  }, [loggedUser]);
+  // useEffect(() => {
+  //   if (loggedUser) {
+  //     setFiltredSystem(loggedUser.studyVocabulary || []);
+  //   }
+  // }, [loggedUser]);
 
 
   const rightProgress = (idLoggedUser, idVocabulary) => {

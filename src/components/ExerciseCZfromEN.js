@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UseEnglish } from "../context/EnglishContext";
 import SummaryProgress from "./SummaryProgress";
+import { Link } from "react-router-dom";
 
 const ExerciseENfromCZ = () => {
   const { loggedUser, rightProgress, eliminatedThisVocabulary, WrongProgress, filtredSystem } =
@@ -30,6 +31,7 @@ const ExerciseENfromCZ = () => {
       setNoVocabulary("Všechna slovíčka byla vyřazena.");
       return; 
     }
+
     // Výběr náhodného indexu ze zbylých slovíček
     const randomIndex = Math.floor(Math.random() * filtredSystem.length);
 
@@ -155,6 +157,9 @@ const ExerciseENfromCZ = () => {
               >
                 Další slovíčko
               </button>
+              <div className="flex items-center justify-center mt-12">
+                <Link to={"/user"} className=" bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 mr-4">Ukončit Opakování</Link>
+                </div>
               <div>{notification}</div>
             </div>
           ) : (

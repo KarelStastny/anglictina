@@ -95,7 +95,6 @@ const Registration = () => {
 
       navigate("/login");
 
-      console.log(registredUser);
       // Poteé tam bude přesměrování na příhlašovací stránku
     }
   };

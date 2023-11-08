@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { UseEnglish } from "../context/EnglishContext";
 import SummaryProgress from "./SummaryProgress";
+import { Link } from "react-router-dom";
 
 const ExerciseENfromCZ = () => {
   const { loggedUser, rightProgress, eliminatedThisVocabulary, WrongProgress, filtredSystem } =
@@ -159,6 +160,10 @@ const ExerciseENfromCZ = () => {
                   Další slovíčko
                 </button>
                 <div>{notification}</div>
+                <div className="flex items-center justify-center mt-12">
+                <Link to={"/user"} className=" bg-red-500 text-white px-2 py-1 rounded-lg hover:bg-red-600 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-red-700 focus:ring-opacity-50 mr-4">Ukončit Opakování</Link>
+                </div>
+            
               </div>
             ) : (
               <input

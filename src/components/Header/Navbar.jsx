@@ -10,7 +10,7 @@ const Navbar = () => {
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
 
   return (
-    <nav className="bg-indigo-900 p-3 flex items-center justify-between">
+    <nav className="bg-indigo-900 p-3 text-white flex items-center justify-between">
       <h1 className="text-white text-xl">
         <Link to={"/"}>Angličtina</Link>
       </h1>
@@ -119,7 +119,7 @@ const Navbar = () => {
             <li>
                 <Link
                   to="/info"
-                  className="hover:bg-indigo-700 px-3 py-2 rounded-md text-lg"
+                  className="text-white hover:bg-indigo-700 px-3 py-2 rounded-md"
                 >
                   Technické Info
                 </Link>
