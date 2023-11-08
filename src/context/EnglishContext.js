@@ -5,7 +5,7 @@ import { user } from "../data/user";
 const EnglishContext = createContext();
 
 export const EnglishContextProvider = ({ children }) => {
-  const [loggedUser, setLoggedUser] = useState(user[0]);
+  const [loggedUser, setLoggedUser] = useState();
   const [registredUser, setRegistredUser] = useState(user);
   const [typeOfExercise, setTypeofExercise] = useState(false);
   const [hamburgerMenu, setHamburgerMenu] = useState(false);
